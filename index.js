@@ -89,8 +89,8 @@ app.post(
       res.json({
         _id: entry._id,
         username: entry.user.username,
-        duration: entry.duration,
         date: entry.date.toDateString(),
+        duration: entry.duration,
         description: entry.description,
       });
     } catch (err) {

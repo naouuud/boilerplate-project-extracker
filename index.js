@@ -87,11 +87,11 @@ app.post(
         .populate("user")
         .exec();
       res.json({
+        _id: entry._id,
         username: entry.user.username,
-        description: entry.description,
         duration: entry.duration,
         date: entry.date.toDateString(),
-        _id: entry._id,
+        description: entry.description,
       });
     } catch (err) {
       next(err.message);

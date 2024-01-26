@@ -86,7 +86,7 @@ app.post(
       res.json({
         _id: user._id,
         username: user.username,
-        date: exercise.toDateString(),
+        date: exercise.date.toDateString(),
         duration: exercise.duration,
         description: exercise.description,
       });

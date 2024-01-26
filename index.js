@@ -6,6 +6,7 @@ const { body, validationResult } = require("express-validator");
 const mongoose = require("mongoose");
 const User = require("./model/user");
 const Exercise = require("./model/exercise");
+const { MongoUnexpectedServerResponseError } = require("mongodb");
 
 app.use(cors());
 app.use(express.static("public"));
@@ -46,6 +47,11 @@ app.post(
   }
 );
 
+app.get("/api/users", async (req, res, next) => {
+  const list = await User.find({}, { _id: 1, username: 1 }).exec();
+  res.json(list);
+});
+
 app.post(
   "/api/users/:_id/exercises",
   body("description", "Description cannot be empty")
@@ -74,7 +80,7 @@ app.post(
         user: req.params._id,
         description: req.body.description,
         duration: req.body.duration,
-        date: req.body.date,
+        date: req.body.date ? req.body.date : new Date(),
       });
       await exercise.save();
       const entry = await Exercise.findById(exercise._id)

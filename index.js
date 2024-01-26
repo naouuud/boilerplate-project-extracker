@@ -83,15 +83,12 @@ app.post(
         date: req.body.date ? req.body.date : new Date(),
       });
       await exercise.save();
-      const entry = await Exercise.findById(exercise._id)
-        .populate("user")
-        .exec();
       res.json({
-        _id: entry._id,
-        username: entry.user.username,
-        date: entry.date.toDateString(),
-        duration: entry.duration,
-        description: entry.description,
+        _id: user._id,
+        username: user.username,
+        date: exercise.toDateString(),
+        duration: exercise.duration,
+        description: exercise.description,
       });
     } catch (err) {
       next(err.message);

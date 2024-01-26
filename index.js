@@ -17,9 +17,9 @@ app.use(express.urlencoded({ extended: false }));
     await mongoose.connect(process.env.MONGO_URL);
     console.log("Database connected");
   } catch (err) {
-    next(err);
+    throw new Error("Database connection failed");
   }
-})().catch(console.log);
+})().catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/views/index.html");
